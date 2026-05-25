@@ -1,0 +1,23 @@
+# Local Postgres for development + automated tests.
+# Production uses Supabase (also Postgres) — see docs/decisions.md.
+#
+#   docker compose up -d     # start the database
+#   docker compose down      # stop it (data is kept in the named volume)
+#   docker compose down -v   # stop AND wipe all data
+services:
+  postgres:
+    image: postgres:17
+    container_name: arduwyn-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: arduwyn
+      POSTGRES_PASSWORD: arduwyn
+      POSTGRES_DB: arduwyn
+    ports:
+      - '5432:5432'
+    volumes:
+      - arduwyn-pgdata:/var/lib/postgresql/data
+      - ./docker/initdb:/docker-entrypoint-initdb.d:ro
+
+volumes:
+  arduwyn-pgdata:
