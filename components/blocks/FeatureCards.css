@@ -1,0 +1,81 @@
+.feature-cards {
+  display: grid;
+  gap: 20px;
+}
+.feature-cards.cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.feature-cards.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.feature-cards.cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 920px) {
+  .feature-cards.cols-3,
+  .feature-cards.cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .feature-cards {
+    grid-template-columns: 1fr !important;
+  }
+}
+.feature-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 26px 24px;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 16px 32px -20px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.055);
+}
+.feature-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(151, 199, 253, 0.22);
+  box-shadow: 0 26px 50px -20px rgba(0, 0, 0, 0.95), 0 0 28px -10px rgba(151, 199, 253, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.feature-card .fc-i {
+  display: block;
+  width: 32px;
+  height: 32px;
+  color: var(--accent);
+  margin-bottom: 15px;
+}
+.feature-card .fc-n {
+  font-family: var(--font-instrument-serif), "Instrument Serif", serif;
+  font-style: italic;
+  color: var(--accent);
+  font-size: 30px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.feature-card .fc-tag {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 11px;
+}
+.feature-card h3 {
+  font-family: var(--font-instrument-serif), "Instrument Serif", serif;
+  font-weight: 400;
+  color: #fff;
+  font-size: 21px;
+  margin: 0 0 9px;
+  letter-spacing: -0.01em;
+}
+.feature-card h3 .accent-i {
+  color: var(--accent);
+  font-style: italic;
+}
+.feature-card p {
+  color: #cdd6e3;
+  font-size: 13.5px;
+  line-height: 1.62;
+  font-weight: 300;
+  margin: 0;
+}

@@ -203,3 +203,17 @@ footer{
   section{padding:60px 0}
   .foot-grid{grid-template-columns:1fr}
 }
+
+/* Restore vertical section spacing: `.container` (a class) otherwise overrides
+   `section { padding: 90px 0 }` and the sections collapse together. The home
+   hero has its own padding, so it's excluded. */
+section.container:not(.hero) {
+  padding-top: 90px;
+  padding-bottom: 90px;
+}
+@media (max-width: 760px) {
+  section.container:not(.hero) {
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+}

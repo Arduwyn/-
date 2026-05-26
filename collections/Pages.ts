@@ -1,7 +1,31 @@
 import type { CollectionConfig, FieldHook } from 'payload'
 
 import { Hero } from '../blocks/Hero'
+import { PageHero } from '../blocks/PageHero'
 import { RichTextBlock } from '../blocks/RichText'
+import { Lede } from '../blocks/Lede'
+import { IndustryTiles } from '../blocks/IndustryTiles'
+import { Callouts } from '../blocks/Callouts'
+import { PlatformTags } from '../blocks/PlatformTags'
+import { Placeholder } from '../blocks/Placeholder'
+import { NumberedTimeline } from '../blocks/NumberedTimeline'
+import { FeatureCards } from '../blocks/FeatureCards'
+import { CalloutBar } from '../blocks/CalloutBar'
+import { StatGrid } from '../blocks/StatGrid'
+import { ProductCards } from '../blocks/ProductCards'
+import { NumberedGrid } from '../blocks/NumberedGrid'
+import { LabeledRows } from '../blocks/LabeledRows'
+import { TagGroups } from '../blocks/TagGroups'
+import { Terminal } from '../blocks/Terminal'
+import { ToolStages } from '../blocks/ToolStages'
+import { HomeHero } from '../blocks/HomeHero'
+import { AboutSplit } from '../blocks/AboutSplit'
+import { Outcomes } from '../blocks/Outcomes'
+import { ServiceCards } from '../blocks/ServiceCards'
+import { CaseStudies } from '../blocks/CaseStudies'
+import { BriefCards } from '../blocks/BriefCards'
+import { LaneCards } from '../blocks/LaneCards'
+import { FAQ } from '../blocks/FAQ'
 import { CTA } from '../blocks/CTA'
 
 const slugify = (value: string): string =>
@@ -42,7 +66,35 @@ export const Pages: CollectionConfig = {
     {
       name: 'layout',
       type: 'blocks',
-      blocks: [Hero, RichTextBlock, CTA],
+      blocks: [
+        Hero,
+        PageHero,
+        RichTextBlock,
+        Lede,
+        IndustryTiles,
+        Callouts,
+        PlatformTags,
+        Placeholder,
+        NumberedTimeline,
+        FeatureCards,
+        CalloutBar,
+        StatGrid,
+        ProductCards,
+        NumberedGrid,
+        LabeledRows,
+        TagGroups,
+        Terminal,
+        ToolStages,
+        HomeHero,
+        AboutSplit,
+        Outcomes,
+        ServiceCards,
+        CaseStudies,
+        BriefCards,
+        LaneCards,
+        FAQ,
+        CTA,
+      ],
       admin: { description: 'Compose the page from reusable blocks.' },
     },
   ],

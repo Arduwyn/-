@@ -1,0 +1,20 @@
+.lede-band {
+  text-align: center;
+  max-width: 880px;
+  margin: 0 auto;
+}
+.lede-band p {
+  color: var(--text-soft);
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.72;
+  font-weight: 300;
+  margin: 0 0 18px;
+}
+.lede-band p:last-child {
+  margin-bottom: 0;
+}
+.lede-band .accent-i {
+  color: var(--accent);
+  font-style: italic;
+  font-family: var(--font-instrument-serif), "Instrument Serif", serif;
+}

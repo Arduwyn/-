@@ -15,7 +15,8 @@
     "test:watch": "vitest",
     "test:unit": "vitest run tests/unit",
     "test:int": "vitest run tests/int",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "seed": "tsx scripts/seed.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.84.1",

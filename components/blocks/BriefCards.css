@@ -1,0 +1,68 @@
+.briefs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+.brief-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 18px;
+  padding: 30px 28px;
+  position: relative;
+  box-shadow: 0 16px 32px -20px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.055);
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.brief-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(151, 199, 253, 0.22);
+  box-shadow: 0 26px 50px -20px rgba(0, 0, 0, 0.95), 0 0 28px -10px rgba(151, 199, 253, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.brief-card .tag {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 5px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.25);
+}
+.brief-card h3 {
+  font-family: var(--font-instrument-serif), "Instrument Serif", serif;
+  font-weight: 400;
+  color: #fff;
+  font-size: 25px;
+  margin: 14px 0 9px;
+  letter-spacing: -0.01em;
+}
+.brief-card p {
+  color: #cdd6e3;
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 300;
+  margin: 0 0 16px;
+}
+.brief-card .card-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.75;
+  font-weight: 500;
+  transition: opacity 0.2s, gap 0.2s;
+}
+.brief-card:hover .card-more {
+  opacity: 1;
+  gap: 10px;
+}
+@media (max-width: 760px) {
+  .briefs-grid {
+    grid-template-columns: 1fr;
+  }
+}

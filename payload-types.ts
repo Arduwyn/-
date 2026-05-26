@@ -197,6 +197,17 @@ export interface Page {
             blockType: 'hero';
           }
         | {
+            eyebrow?: string | null;
+            /**
+             * Wrap accent words in *asterisks*, e.g. Industry *Focus*.
+             */
+            heading: string;
+            subheading?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'pageHero';
+          }
+        | {
             content?: {
               root: {
                 type: string;
@@ -217,12 +228,614 @@ export interface Page {
             blockType: 'richText';
           }
         | {
-            heading: string;
-            text?: string | null;
+            eyebrow?: string | null;
+            /**
+             * Optional. *accent* supported.
+             */
+            heading?: string | null;
+            subheading?: string | null;
+            /**
+             * Paragraphs separated by a blank line. *accent* supported.
+             */
+            body: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'lede';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * *accent* supported.
+             */
+            heading?: string | null;
+            subheading?: string | null;
+            items?:
+              | {
+                  icon?: ('none' | 'finance' | 'healthcare') | null;
+                  /**
+                   * *accent* supported.
+                   */
+                  title: string;
+                  lede?: string | null;
+                  bullets?:
+                    | {
+                        text: string;
+                        muted?: boolean | null;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  linkLabel?: string | null;
+                  href?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'industryTiles';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * *accent* supported.
+             */
+            heading?: string | null;
+            subheading?: string | null;
+            items?:
+              | {
+                  tag?: string | null;
+                  title: string;
+                  body?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'callouts';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * *accent* supported.
+             */
+            heading?: string | null;
+            subheading?: string | null;
+            intro?: string | null;
+            tags?:
+              | {
+                  label: string;
+                  placeholder?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Optional dashed placeholder note shown below the tags.
+             */
+            note?: {
+              tag?: string | null;
+              body?: string | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'platformTags';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * *accent* supported.
+             */
+            heading?: string | null;
+            subheading?: string | null;
+            tag?: string | null;
+            body: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'placeholder';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * *accent* supported.
+             */
+            heading?: string | null;
+            subheading?: string | null;
+            panelStyle?: ('boxed' | 'bare') | null;
+            steps?:
+              | {
+                  /**
+                   * e.g. 01. Blank = auto-number.
+                   */
+                  number?: string | null;
+                  /**
+                   * Optional small kicker (e.g. a date).
+                   */
+                  meta?: string | null;
+                  /**
+                   * *accent* supported.
+                   */
+                  title: string;
+                  body?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'numberedTimeline';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * *accent* supported.
+             */
+            heading?: string | null;
+            subheading?: string | null;
+            columns?: ('2' | '3' | '4') | null;
+            items?:
+              | {
+                  /**
+                   * Icon key (see components/Icon.tsx). Optional.
+                   */
+                  icon?: string | null;
+                  /**
+                   * Serif number shown instead of an icon. Optional.
+                   */
+                  number?: string | null;
+                  tag?: string | null;
+                  /**
+                   * *accent* supported (wrap the whole title to make it italic-accent).
+                   */
+                  title: string;
+                  body?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'featureCards';
+          }
+        | {
+            /**
+             * *accent* supported.
+             */
+            body: string;
             button?: {
               label?: string | null;
               href?: string | null;
             };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'calloutBar';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * *accent* supported.
+             */
+            heading?: string | null;
+            subheading?: string | null;
+            columns?: ('2' | '3' | '4') | null;
+            items?:
+              | {
+                  /**
+                   * Optional small label above the term.
+                   */
+                  kicker?: string | null;
+                  term: string;
+                  body?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'statGrid';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * *accent* supported.
+             */
+            heading?: string | null;
+            subheading?: string | null;
+            items?:
+              | {
+                  /**
+                   * Short badge, e.g. ZIA.
+                   */
+                  code?: string | null;
+                  /**
+                   * *accent* supported.
+                   */
+                  title: string;
+                  lede?: string | null;
+                  bullets?:
+                    | {
+                        text: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'productCards';
+          }
+        | {
+            /**
+             * *accent* supported.
+             */
+            heading: string;
+            /**
+             * Big accent number, e.g. 27.
+             */
+            count?: string | null;
+            intro?: string | null;
+            columns?: ('2' | '3') | null;
+            items?:
+              | {
+                  /**
+                   * Blank = auto-number.
+                   */
+                  number?: string | null;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'numberedGrid';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * *accent* supported.
+             */
+            heading?: string | null;
+            subheading?: string | null;
+            layout?: ('grid' | 'stack') | null;
+            items?:
+              | {
+                  /**
+                   * *accent* supported.
+                   */
+                  title: string;
+                  description?: string | null;
+                  tags?:
+                    | {
+                        label: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'labeledRows';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * *accent* supported.
+             */
+            heading?: string | null;
+            subheading?: string | null;
+            columns?: ('2' | '3') | null;
+            groups?:
+              | {
+                  label?: string | null;
+                  tags?:
+                    | {
+                        label: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'tagGroups';
+          }
+        | {
+            /**
+             * Title-bar caption.
+             */
+            label?: string | null;
+            lines?:
+              | {
+                  text?: string | null;
+                  style?: ('command' | 'output' | 'success') | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'terminal';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * *accent* supported.
+             */
+            heading?: string | null;
+            subheading?: string | null;
+            stages?:
+              | {
+                  number?: string | null;
+                  /**
+                   * *accent* supported.
+                   */
+                  title: string;
+                  blurb?: string | null;
+                  columns?: ('1' | '2') | null;
+                  tools?:
+                    | {
+                        /**
+                         * Monospace path label.
+                         */
+                        modPath?: string | null;
+                        title: string;
+                        lede?: string | null;
+                        bullets?:
+                          | {
+                              /**
+                               * Inline `code` supported.
+                               */
+                              text: string;
+                              id?: string | null;
+                            }[]
+                          | null;
+                        tags?:
+                          | {
+                              label: string;
+                              id?: string | null;
+                            }[]
+                          | null;
+                        wide?: boolean | null;
+                        guardTitle?: string | null;
+                        guardBullets?:
+                          | {
+                              /**
+                               * Inline `code` supported.
+                               */
+                              text: string;
+                              id?: string | null;
+                            }[]
+                          | null;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'toolStages';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * *accent* supported.
+             */
+            heading: string;
+            sub?: string | null;
+            ctas?:
+              | {
+                  label: string;
+                  href: string;
+                  style?: ('primary' | 'ghost') | null;
+                  id?: string | null;
+                }[]
+              | null;
+            showDiagram?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'homeHero';
+          }
+        | {
+            /**
+             * Optional HTML id for in-page links (e.g. "about").
+             */
+            anchor?: string | null;
+            eyebrow?: string | null;
+            /**
+             * *accent* supported.
+             */
+            heading?: string | null;
+            subheading?: string | null;
+            /**
+             * Paragraphs separated by a blank line. *accent* supported.
+             */
+            story?: string | null;
+            groups?:
+              | {
+                  label?: string | null;
+                  tags?:
+                    | {
+                        label: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            focusLabel?: string | null;
+            focus?: string | null;
+            ctaLabel?: string | null;
+            ctaHref?: string | null;
+            differentiators?:
+              | {
+                  /**
+                   * Icon key (see components/Icon.tsx).
+                   */
+                  icon?: string | null;
+                  title: string;
+                  body?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'aboutSplit';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * *accent* supported.
+             */
+            heading?: string | null;
+            subheading?: string | null;
+            items?:
+              | {
+                  /**
+                   * Icon key (see components/Icon.tsx).
+                   */
+                  icon?: string | null;
+                  /**
+                   * *accent* supported.
+                   */
+                  title: string;
+                  body?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'outcomes';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * *accent* supported.
+             */
+            heading?: string | null;
+            subheading?: string | null;
+            items?:
+              | {
+                  tag?: string | null;
+                  /**
+                   * *accent* supported.
+                   */
+                  title: string;
+                  bullets?:
+                    | {
+                        text: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'serviceCards';
+          }
+        | {
+            /**
+             * *accent* supported.
+             */
+            heading?: string | null;
+            subheading?: string | null;
+            ctaLabel?: string | null;
+            ctaHref?: string | null;
+            items?:
+              | {
+                  /**
+                   * Optional small kicker.
+                   */
+                  vertical?: string | null;
+                  /**
+                   * *accent* supported.
+                   */
+                  title: string;
+                  summary?: string | null;
+                  ctaLabel?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'caseStudies';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * *accent* supported.
+             */
+            heading?: string | null;
+            subheading?: string | null;
+            items?:
+              | {
+                  tag?: string | null;
+                  /**
+                   * *accent* supported.
+                   */
+                  title: string;
+                  summary?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'briefCards';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * *accent* supported.
+             */
+            heading?: string | null;
+            subheading?: string | null;
+            items?:
+              | {
+                  tag?: string | null;
+                  /**
+                   * *accent* supported.
+                   */
+                  title: string;
+                  forText?: string | null;
+                  receiveLabel?: string | null;
+                  receive?: string | null;
+                  duration?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Centered note below the lanes. *accent* supported.
+             */
+            note?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'laneCards';
+          }
+        | {
+            heading?: string | null;
+            items?:
+              | {
+                  question: string;
+                  answer: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faq';
+          }
+        | {
+            eyebrow?: string | null;
+            /**
+             * *accent* supported.
+             */
+            heading: string;
+            body?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  href: string;
+                  style?: ('primary' | 'ghost') | null;
+                  id?: string | null;
+                }[]
+              | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'cta';
@@ -378,6 +991,15 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        pageHero?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheading?: T;
+              id?: T;
+              blockName?: T;
+            };
         richText?:
           | T
           | {
@@ -385,16 +1007,484 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        cta?:
+        lede?:
           | T
           | {
+              eyebrow?: T;
               heading?: T;
-              text?: T;
+              subheading?: T;
+              body?: T;
+              id?: T;
+              blockName?: T;
+            };
+        industryTiles?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheading?: T;
+              items?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    lede?: T;
+                    bullets?:
+                      | T
+                      | {
+                          text?: T;
+                          muted?: T;
+                          id?: T;
+                        };
+                    linkLabel?: T;
+                    href?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        callouts?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheading?: T;
+              items?:
+                | T
+                | {
+                    tag?: T;
+                    title?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        platformTags?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheading?: T;
+              intro?: T;
+              tags?:
+                | T
+                | {
+                    label?: T;
+                    placeholder?: T;
+                    id?: T;
+                  };
+              note?:
+                | T
+                | {
+                    tag?: T;
+                    body?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        placeholder?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheading?: T;
+              tag?: T;
+              body?: T;
+              id?: T;
+              blockName?: T;
+            };
+        numberedTimeline?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheading?: T;
+              panelStyle?: T;
+              steps?:
+                | T
+                | {
+                    number?: T;
+                    meta?: T;
+                    title?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        featureCards?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheading?: T;
+              columns?: T;
+              items?:
+                | T
+                | {
+                    icon?: T;
+                    number?: T;
+                    tag?: T;
+                    title?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        calloutBar?:
+          | T
+          | {
+              body?: T;
               button?:
                 | T
                 | {
                     label?: T;
                     href?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        statGrid?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheading?: T;
+              columns?: T;
+              items?:
+                | T
+                | {
+                    kicker?: T;
+                    term?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        productCards?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheading?: T;
+              items?:
+                | T
+                | {
+                    code?: T;
+                    title?: T;
+                    lede?: T;
+                    bullets?:
+                      | T
+                      | {
+                          text?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        numberedGrid?:
+          | T
+          | {
+              heading?: T;
+              count?: T;
+              intro?: T;
+              columns?: T;
+              items?:
+                | T
+                | {
+                    number?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        labeledRows?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheading?: T;
+              layout?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    tags?:
+                      | T
+                      | {
+                          label?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        tagGroups?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheading?: T;
+              columns?: T;
+              groups?:
+                | T
+                | {
+                    label?: T;
+                    tags?:
+                      | T
+                      | {
+                          label?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        terminal?:
+          | T
+          | {
+              label?: T;
+              lines?:
+                | T
+                | {
+                    text?: T;
+                    style?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        toolStages?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheading?: T;
+              stages?:
+                | T
+                | {
+                    number?: T;
+                    title?: T;
+                    blurb?: T;
+                    columns?: T;
+                    tools?:
+                      | T
+                      | {
+                          modPath?: T;
+                          title?: T;
+                          lede?: T;
+                          bullets?:
+                            | T
+                            | {
+                                text?: T;
+                                id?: T;
+                              };
+                          tags?:
+                            | T
+                            | {
+                                label?: T;
+                                id?: T;
+                              };
+                          wide?: T;
+                          guardTitle?: T;
+                          guardBullets?:
+                            | T
+                            | {
+                                text?: T;
+                                id?: T;
+                              };
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        homeHero?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              sub?: T;
+              ctas?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                    style?: T;
+                    id?: T;
+                  };
+              showDiagram?: T;
+              id?: T;
+              blockName?: T;
+            };
+        aboutSplit?:
+          | T
+          | {
+              anchor?: T;
+              eyebrow?: T;
+              heading?: T;
+              subheading?: T;
+              story?: T;
+              groups?:
+                | T
+                | {
+                    label?: T;
+                    tags?:
+                      | T
+                      | {
+                          label?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              focusLabel?: T;
+              focus?: T;
+              ctaLabel?: T;
+              ctaHref?: T;
+              differentiators?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        outcomes?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheading?: T;
+              items?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        serviceCards?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheading?: T;
+              items?:
+                | T
+                | {
+                    tag?: T;
+                    title?: T;
+                    bullets?:
+                      | T
+                      | {
+                          text?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        caseStudies?:
+          | T
+          | {
+              heading?: T;
+              subheading?: T;
+              ctaLabel?: T;
+              ctaHref?: T;
+              items?:
+                | T
+                | {
+                    vertical?: T;
+                    title?: T;
+                    summary?: T;
+                    ctaLabel?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        briefCards?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheading?: T;
+              items?:
+                | T
+                | {
+                    tag?: T;
+                    title?: T;
+                    summary?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        laneCards?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              subheading?: T;
+              items?:
+                | T
+                | {
+                    tag?: T;
+                    title?: T;
+                    forText?: T;
+                    receiveLabel?: T;
+                    receive?: T;
+                    duration?: T;
+                    id?: T;
+                  };
+              note?: T;
+              id?: T;
+              blockName?: T;
+            };
+        faq?:
+          | T
+          | {
+              heading?: T;
+              items?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        cta?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              body?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                    style?: T;
+                    id?: T;
                   };
               id?: T;
               blockName?: T;
