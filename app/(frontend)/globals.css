@@ -208,12 +208,12 @@ footer{
    `section { padding: 90px 0 }` and the sections collapse together. The home
    hero has its own padding, so it's excluded. */
 section.container:not(.hero) {
-  padding-top: 90px;
-  padding-bottom: 90px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 @media (max-width: 760px) {
   section.container:not(.hero) {
-    padding-top: 56px;
-    padding-bottom: 56px;
+    padding-top: 30px;
+    padding-bottom: 30px;
   }
 }
