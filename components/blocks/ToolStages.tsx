@@ -12,7 +12,12 @@ function Bullets({ items }: { items?: { text: string; id?: string | null }[] | n
   return (
     <ul>
       {items.map((bullet, i) => (
-        <li key={bullet.id ?? i}>{codeText(bullet.text)}</li>
+        // Wrap the text in a span so the <li>'s flex layout sees ONE inline
+        // item (not 3 — text/code/text), letting inline `<code>` pills flow
+        // mid-paragraph instead of becoming stretched flex columns.
+        <li key={bullet.id ?? i}>
+          <span>{codeText(bullet.text)}</span>
+        </li>
       ))}
     </ul>
   )

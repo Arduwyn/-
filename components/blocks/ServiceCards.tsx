@@ -4,9 +4,9 @@ import { SectionHead } from '../SectionHead'
 import { accentText } from './accent'
 import type { ServiceCardsBlockData } from './types'
 
-export function ServiceCardsBlock({ eyebrow, heading, subheading, items }: ServiceCardsBlockData) {
+export function ServiceCardsBlock({ anchor, eyebrow, heading, subheading, items }: ServiceCardsBlockData) {
   return (
-    <section className="container">
+    <section id={anchor || undefined} className="container">
       <SectionHead eyebrow={eyebrow} heading={heading} subheading={subheading} />
       <div className="services-wrap">
         <div className="svc-grid">

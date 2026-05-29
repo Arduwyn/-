@@ -19,6 +19,11 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      // Adds a "Back to site" link at the top of the admin sidebar so editors
+      // can navigate back to the public site (/) from anywhere in /admin.
+      beforeNavLinks: ['/components/admin/BackToSite#default'],
+    },
   },
   collections: [Users, Media, Pages],
   editor: lexicalEditor(),

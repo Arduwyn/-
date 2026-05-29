@@ -1,9 +1,7 @@
 .page-hero {
   padding: 80px 0 70px;
   text-align: center;
-  background:
-    radial-gradient(700px 300px at 50% 0%, rgba(151, 199, 253, 0.12), transparent 70%),
-    linear-gradient(180deg, #080c17 0%, #04050c 100%);
+  background: var(--hero-bg);
   border-bottom: 1px solid var(--line);
 }
 .page-hero h1 {

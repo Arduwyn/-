@@ -5,6 +5,7 @@ export const ServiceCards: Block = {
   slug: 'serviceCards',
   labels: { singular: 'Service Cards', plural: 'Service Cards' },
   fields: [
+    { name: 'anchor', type: 'text', admin: { description: 'Optional HTML id for in-page links (e.g. "services").' } },
     { name: 'eyebrow', type: 'text' },
     { name: 'heading', type: 'text', admin: { description: '*accent* supported.' } },
     { name: 'subheading', type: 'text' },

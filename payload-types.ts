@@ -704,6 +704,10 @@ export interface Page {
             blockType: 'outcomes';
           }
         | {
+            /**
+             * Optional HTML id for in-page links (e.g. "services").
+             */
+            anchor?: string | null;
             eyebrow?: string | null;
             /**
              * *accent* supported.
@@ -1382,6 +1386,7 @@ export interface PagesSelect<T extends boolean = true> {
         serviceCards?:
           | T
           | {
+              anchor?: T;
               eyebrow?: T;
               heading?: T;
               subheading?: T;

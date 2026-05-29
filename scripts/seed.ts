@@ -696,6 +696,7 @@ async function seed() {
       },
       {
         blockType: 'serviceCards',
+        anchor: 'services',
         heading: 'Services',
         subheading: 'Comprehensive security solutions designed for modern enterprises',
         items: [
