@@ -105,8 +105,33 @@ Visitor ──HTTPS──▶ kamal-proxy ──▶ Next.js + Payload container (
   request → healthcheck failed.
 - **Fix**: stripped `../` from the seven grep+cut lines in `.kamal/secrets`
   (the gitignored file — no commit needed). Verified all seven keys resolve.
-- **`kamal deploy`**: 🎉 succeeded. Site live at http://162.243.224.84,
-  `/admin` reachable.
+- **`kamal deploy`**: 🎉 succeeded. Frontend live at http://162.243.224.84.
+- **Follow-up: admin rendered blank** at http://162.243.224.84/admin.
+  Server returned 200 + full HTML shell, but the body was just empty React
+  Server Component suspense markers (`<!--$--><!--/$-->`). No client-side
+  JS errors — silent failure. Server logs revealed:
+  ```
+  getFromImportMap: PayloadComponent not found in importMap
+    key: '@payloadcms/storage-s3/client#S3ClientUploadHandler'
+  ```
+  Root cause: the s3Storage plugin is gated on `S3_*` env vars in
+  `payload.config.ts` (to keep local dev on disk storage). At build time
+  the Dockerfile didn't set those vars, so `pnpm payload generate:importmap`
+  saw no plugin → didn't register `S3ClientUploadHandler` in the import
+  map. At runtime, real S3 vars activated the plugin, Payload tried to
+  render the component, looked it up, got `undefined`, and React silently
+  rendered nothing — collapsing the entire admin tree.
+- **Fix**: added build-time placeholder `S3_*` env vars in the Dockerfile
+  (real values still come from Kamal at runtime). `kamal deploy` rebuilt
+  → admin loads cleanly → create-first-user form visible.
+
+### Phase 5 outcome
+
+- ✅ Frontend live at http://162.243.224.84 (full site, seeded content)
+- ✅ Admin live at http://162.243.224.84/admin
+- ✅ `pnpm seed:prod` run successfully — home, about, engineering, case
+  studies all populated in Supabase
+- ⏳ Pending: create first admin user, enable HTTPS (Phase 6)
 
 ### Known cosmetic issues to clean up in a follow-up deploy
 
@@ -146,13 +171,68 @@ Visitor ──HTTPS──▶ kamal-proxy ──▶ Next.js + Payload container (
 - [x] ~~Create GitHub Container Registry PAT, save to `~/.ghcr-token`~~ ✅
 - [x] ~~`kamal setup` / `kamal deploy` — first deploy~~ ✅ live at http://162.243.224.84
 - [ ] Create first admin user at http://162.243.224.84/admin
-- [ ] Seed production content (`pnpm seed:prod`) — when ready to launch
+- [x] ~~Seed production content (`pnpm seed:prod`)~~ ✅ done — homepage live
 - [ ] Enable RLS on Payload tables for defense-in-depth (SQL snippet in
       `docs/supabase.md`) — recommended before going live
-- [ ] Phase 6: point domain at the Droplet, flip `proxy.ssl: true` in
-      `config/deploy.yml`, set `proxy.host: <domain>`, `kamal deploy`
+- [ ] Phase 6: point domain at the Droplet + enable HTTPS (see runbook
+      below).
 - [ ] Fix the `image: ghcr.io/...` typo in `config/deploy.yml` (see
       "Known cosmetic issues" above)
+
+## Phase 6 runbook — domain + HTTPS
+
+### What the client needs (one-line message to send them)
+
+> Add an **A record** for `@` → `162.243.224.84`, and a **CNAME record** for
+> `www` → the apex domain. TTL 300. No SSL / no proxy / no URL forwarding
+> at the registrar — HTTPS is handled on our server with Let's Encrypt.
+
+### After he confirms DNS is in place
+
+1. Verify DNS has propagated to you:
+   ```bash
+   dig <domain> +short
+   # expect: 162.243.224.84
+   ```
+2. Edit `config/deploy.yml`:
+   ```yaml
+   proxy:
+     ssl: true              # was: false
+     hosts:                 # plural — list, not single host
+       - <domain>
+       - www.<domain>
+     app_port: 3000
+     healthcheck:
+       path: /
+       interval: 5
+       timeout: 30
+   ```
+3. Commit and deploy:
+   ```bash
+   git add config/deploy.yml
+   git commit -m "Enable HTTPS"
+   kamal deploy
+   ```
+   kamal-proxy does the HTTP-01 ACME challenge with Let's Encrypt, gets the
+   cert, switches to HTTPS on 443, auto-redirects 80 → 443. ~30 seconds.
+4. Verify:
+   ```bash
+   curl -sI https://<domain> | head -5         # 200 OK
+   curl -sI http://<domain> | head -5          # 301/308 → https
+   ```
+5. Watch the proxy boot logs if curious:
+   ```bash
+   ssh arduwyn-prod 'docker logs -f kamal-proxy'
+   ```
+
+### Common breakages
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| `could not obtain certificate` during deploy | DNS hasn't fully propagated | Wait 15 min, `kamal deploy` again |
+| Cert obtained, browser still shows insecure | Cached old response | Hard-refresh (Cmd+Shift+R), or test in incognito |
+| HTTPS works, HTTP doesn't redirect | kamal-proxy needs restart | `kamal proxy reboot` |
+| Want to roll back to HTTP-only | DNS issue, want to investigate | `git revert HEAD && kamal deploy` |
 
 ## Out of scope (for now)
 

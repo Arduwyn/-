@@ -24,11 +24,12 @@ servers:
     - 162.243.224.84
 
 # Reverse proxy + TLS handled by kamal-proxy (auto-installed).
-# Initially no domain — visit the site at http://162.243.224.84.
-# When the domain is ready, set `host:` to the domain and `ssl: true` →
-# kamal-proxy provisions a Let's Encrypt cert on next `kamal deploy`.
+# Domain points at 162.243.224.84 via an A record on the apex.
+# kamal-proxy provisions a Let's Encrypt cert on `kamal deploy` and
+# auto-redirects HTTP → HTTPS.
 proxy:
-  ssl: false
+  ssl: true
+  host: arduwyn.com
   app_port: 3000
   healthcheck:
     path: /
