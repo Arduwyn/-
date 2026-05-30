@@ -4,6 +4,10 @@ import { getPayload } from 'payload'
 
 import { RenderBlocks } from '@/components/RenderBlocks'
 
+// CMS-driven catch-all — render at request time so admin edits propagate
+// immediately, and so `next build` doesn't need a database connection.
+export const dynamic = 'force-dynamic'
+
 /**
  * Renders any CMS page by its slug, e.g. /engineering -> the page with slug "engineering".
  * The homepage (slug "home") is served by ../page.tsx; explicit routes like /architecture

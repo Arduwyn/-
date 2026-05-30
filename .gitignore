@@ -55,3 +55,7 @@ next-env.d.ts
 
 # Claude Code (local only)
 .claude/
+
+# Kamal secrets (Personal Access Tokens, etc.)
+.kamal/secrets
+.kamal/secrets.*
