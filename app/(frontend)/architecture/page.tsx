@@ -143,7 +143,7 @@ export default function ArchitecturePage() {
         </div>
       </section>
 
-      <section className="container">
+      <section className="container reveal">
         <div className="section-head">
           <h2>The architecture problem</h2>
           <p>
@@ -171,7 +171,7 @@ export default function ArchitecturePage() {
         </div>
       </section>
 
-      <section className="container">
+      <section className="container reveal">
         <div className="section-head">
           <h2>Reference architecture</h2>
           <p>The layered stack we deploy. Vendor-agnostic in pattern, opinionated in execution.</p>
@@ -195,7 +195,7 @@ export default function ArchitecturePage() {
         </div>
       </section>
 
-      <section className="container">
+      <section className="container reveal">
         <div className="section-head">
           <h2>The identity chain</h2>
           <p>
@@ -214,7 +214,7 @@ export default function ArchitecturePage() {
         </div>
       </section>
 
-      <section className="container">
+      <section className="container reveal">
         <div className="section-head">
           <h2>Compliance mapping</h2>
           <p>
@@ -233,7 +233,7 @@ export default function ArchitecturePage() {
         </div>
       </section>
 
-      <section className="container">
+      <section className="container reveal">
         <div className="section-head">
           <h2>Migration path</h2>
           <p>Five phases. Phase 1 starts producing security value within 30 days.</p>
@@ -252,7 +252,7 @@ export default function ArchitecturePage() {
         </div>
       </section>
 
-      <section id="contact" className="container">
+      <section id="contact" className="container reveal">
         <div className="cta-band">
           <span className="eyebrow">Engage</span>
           <h2>Want this architecture for your environment?</h2>

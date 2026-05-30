@@ -214,6 +214,28 @@ footer{
   .foot-grid{grid-template-columns:1fr}
 }
 
+/* ---------- scroll reveal (subtle fade + rise on viewport entry) ----------
+   .reveal alone does NOT hide content — content stays visible without JS.
+   ScrollReveal adds `.is-prepped` to below-fold elements (then hides them) and
+   `.is-visible` when they enter the viewport. So a JS failure = page stays
+   visible; only the animation is lost. */
+.reveal {
+  transition: opacity .7s ease-out, transform .7s ease-out;
+  will-change: opacity, transform;
+}
+.reveal.is-prepped:not(.is-visible) {
+  opacity: 0;
+  transform: translateY(28px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.is-prepped:not(.is-visible) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* Restore vertical section spacing: `.container` (a class) otherwise overrides
    `section { padding: 90px 0 }` and the sections collapse together. The home
    hero has its own padding, so it's excluded. */

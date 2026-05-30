@@ -745,6 +745,10 @@ export interface Page {
             items?:
               | {
                   /**
+                   * Optional. Upload images first in the Media collection, then pick one here. ~16:10 ratio looks best (e.g. 1200×750). If left blank, the card falls back to a placeholder icon.
+                   */
+                  image?: (number | null) | Media;
+                  /**
                    * Optional small kicker.
                    */
                   vertical?: string | null;
@@ -1416,6 +1420,7 @@ export interface PagesSelect<T extends boolean = true> {
               items?:
                 | T
                 | {
+                    image?: T;
                     vertical?: T;
                     title?: T;
                     summary?: T;

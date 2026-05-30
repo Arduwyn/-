@@ -54,6 +54,10 @@
   height: auto;
   opacity: 0.65;
 }
+/* When an editor has picked an image, next/image fills the .cs-thumb. */
+.cs-thumb img {
+  object-fit: cover;
+}
 .cs-card .vertical {
   font-size: 10.5px;
   font-weight: 500;

@@ -22,7 +22,13 @@ export function HomeHeroBlock({ eyebrow, heading, sub, ctas, showDiagram }: Home
             ))}
           </div>
         ) : null}
-        {showDiagram !== false ? <ZeroTrustExchange /> : null}
+        {showDiagram !== false ? (
+          // data-parallax-speed: ZTE diagram drifts at 20% scroll rate, giving
+          // subtle depth as you scroll past the hero. Picked up by <Parallax />.
+          <div data-parallax-speed="0.2">
+            <ZeroTrustExchange />
+          </div>
+        ) : null}
       </section>
     </div>
   )
