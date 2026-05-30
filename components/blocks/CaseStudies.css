@@ -31,6 +31,14 @@
   flex-direction: column;
   box-shadow: 0 16px 32px -20px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+.cs-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
 }
 .cs-card:hover {
   transform: translateY(-4px);
@@ -53,6 +61,10 @@
   width: 55%;
   height: auto;
   opacity: 0.65;
+}
+/* When an editor has picked an image, next/image fills the .cs-thumb. */
+.cs-thumb img {
+  object-fit: cover;
 }
 .cs-card .vertical {
   font-size: 10.5px;
@@ -96,4 +108,171 @@
   .cs-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ---------- case-study detail modal (native <dialog>) ---------- */
+.cs-modal {
+  /* native dialog defaults overrides: kill default margin/padding/border. */
+  margin: auto;
+  padding: 0;
+  border: none;
+  background: transparent;
+  max-width: min(720px, calc(100% - 40px));
+  width: 100%;
+  max-height: 90vh;
+  overflow: visible;
+}
+.cs-modal::backdrop {
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.cs-modal-inner {
+  position: relative;
+  background: #0e1320;
+  border: 1px solid rgba(151, 199, 253, 0.18);
+  border-radius: 20px;
+  padding: 40px clamp(24px, 4vw, 52px) 44px;
+  color: var(--text);
+  box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.cs-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  color: #9aa1b5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  padding: 0;
+}
+.cs-modal-close:hover {
+  background: rgba(151, 199, 253, 0.12);
+  color: var(--accent);
+}
+.cs-modal-close svg {
+  width: 16px;
+  height: 16px;
+}
+.cs-modal h3 {
+  font-family: var(--font-instrument-serif), 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: clamp(28px, 3.6vw, 44px);
+  color: #fff;
+  margin: 0 0 16px;
+  letter-spacing: -0.012em;
+  line-height: 1.1;
+  padding-right: 48px;
+}
+.cs-modal h3 .accent-i {
+  color: var(--accent);
+  font-style: italic;
+}
+.cs-modal-lede {
+  color: var(--text-soft);
+  font-size: 16px;
+  line-height: 1.65;
+  font-weight: 300;
+  margin: 0 0 22px;
+}
+.cs-modal h4 {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sub);
+  font-weight: 500;
+  margin: 22px 0 10px;
+}
+.cs-modal-note {
+  color: #cdd6e3;
+  font-size: 14.5px;
+  line-height: 1.62;
+  font-weight: 300;
+  margin: 0 0 8px;
+}
+.cs-modal ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 8px;
+}
+.cs-modal ul li {
+  display: flex;
+  gap: 11px;
+  padding: 6px 0;
+  font-size: 14.5px;
+  color: #cdd6e3;
+  font-weight: 300;
+  line-height: 1.5;
+}
+.cs-modal ul li::before {
+  content: '';
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 8px;
+  box-shadow: 0 0 6px rgba(151, 199, 253, 0.55);
+}
+.cs-modal-stat-row {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin: 18px 0 6px;
+  padding: 18px 22px;
+  background: rgba(151, 199, 253, 0.06);
+  border: 1px solid rgba(151, 199, 253, 0.15);
+  border-radius: 12px;
+}
+.cs-modal-stat {
+  flex: 1 1 auto;
+  min-width: 120px;
+}
+.cs-modal-stat .value {
+  font-family: var(--font-instrument-serif), 'Instrument Serif', serif;
+  font-size: 32px;
+  color: var(--accent);
+  line-height: 1;
+  font-style: italic;
+}
+.cs-modal-stat .value .accent-i {
+  /* the accent helper renders an inner span; here the parent already styles
+     italic accent — make sure nested .accent-i doesn't double-style. */
+  font-style: inherit;
+  color: inherit;
+}
+.cs-modal-stat .label {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sub);
+  margin-top: 6px;
+  font-weight: 500;
+}
+.cs-modal-cta {
+  margin-top: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: var(--accent);
+  color: #000;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+}
+.cs-modal-cta:hover {
+  background: #cce3ff;
+  transform: translateY(-1px);
 }

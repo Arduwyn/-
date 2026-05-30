@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Sora, Instrument_Serif } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { ScrollReveal } from "@/components/ScrollReveal";
+import { Parallax } from "@/components/Parallax";
 import "./globals.css";
 
 const sora = Sora({
@@ -41,6 +43,8 @@ export default function RootLayout({
         <Header />
         <main id="top">{children}</main>
         <Footer />
+        <ScrollReveal />
+        <Parallax />
       </body>
     </html>
   );

@@ -736,6 +736,10 @@ export interface Page {
           }
         | {
             /**
+             * Optional HTML id for in-page links (e.g. "portfolio").
+             */
+            anchor?: string | null;
+            /**
              * *accent* supported.
              */
             heading?: string | null;
@@ -745,6 +749,10 @@ export interface Page {
             items?:
               | {
                   /**
+                   * Optional. Upload images first in the Media collection, then pick one here. ~16:10 ratio looks best (e.g. 1200×750). If left blank, the card falls back to a placeholder icon.
+                   */
+                  image?: (number | null) | Media;
+                  /**
                    * Optional small kicker.
                    */
                   vertical?: string | null;
@@ -752,8 +760,48 @@ export interface Page {
                    * *accent* supported.
                    */
                   title: string;
+                  /**
+                   * Short blurb shown on the card.
+                   */
                   summary?: string | null;
                   ctaLabel?: string | null;
+                  /**
+                   * Modal opening line (shown right under the title in the modal).
+                   */
+                  lede?: string | null;
+                  /**
+                   * Up to 3 highlight stats shown in a row inside the modal.
+                   */
+                  stats?:
+                    | {
+                        /**
+                         * e.g. "120K+", "VPN-free", "2+ yrs"
+                         */
+                        value: string;
+                        /**
+                         * Small caption under the value.
+                         */
+                        label: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  /**
+                   * Modal: the SITUATION paragraph.
+                   */
+                  situation?: string | null;
+                  /**
+                   * Modal: the APPROACH bullet list.
+                   */
+                  approach?:
+                    | {
+                        text: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  /**
+                   * Modal: the OUTCOME paragraph.
+                   */
+                  outcome?: string | null;
                   id?: string | null;
                 }[]
               | null;
@@ -1409,6 +1457,7 @@ export interface PagesSelect<T extends boolean = true> {
         caseStudies?:
           | T
           | {
+              anchor?: T;
               heading?: T;
               subheading?: T;
               ctaLabel?: T;
@@ -1416,10 +1465,27 @@ export interface PagesSelect<T extends boolean = true> {
               items?:
                 | T
                 | {
+                    image?: T;
                     vertical?: T;
                     title?: T;
                     summary?: T;
                     ctaLabel?: T;
+                    lede?: T;
+                    stats?:
+                      | T
+                      | {
+                          value?: T;
+                          label?: T;
+                          id?: T;
+                        };
+                    situation?: T;
+                    approach?:
+                      | T
+                      | {
+                          text?: T;
+                          id?: T;
+                        };
+                    outcome?: T;
                     id?: T;
                   };
               id?: T;
