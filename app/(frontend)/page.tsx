@@ -4,6 +4,12 @@ import { getPayload } from 'payload'
 
 import { RenderBlocks } from '@/components/RenderBlocks'
 
+// CMS-driven page — render at request time so admin edits show up live, and so
+// `next build` doesn't need a live database connection. Without this, Next
+// tries to pre-render the home page at build time and crashes because the
+// build container has no Postgres to talk to.
+export const dynamic = 'force-dynamic'
+
 async function getHomePage() {
   const payload = await getPayload({ config })
   const { docs } = await payload.find({

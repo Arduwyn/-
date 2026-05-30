@@ -17,13 +17,19 @@
     "test:int": "vitest run tests/int",
     "test:e2e": "playwright test",
     "seed": "tsx scripts/seed.ts",
-    "console": "tsx scripts/console.ts"
+    "console": "tsx scripts/console.ts",
+    "migrate:prod": "set -a && . ./.env.production && set +a && pnpm payload migrate",
+    "migrate:prod:status": "set -a && . ./.env.production && set +a && pnpm payload migrate:status",
+    "seed:prod": "set -a && . ./.env.production && set +a && pnpm seed",
+    "console:prod": "set -a && . ./.env.production && set +a && pnpm console",
+    "test:storage:prod": "set -a && . ./.env.production && set +a && tsx scripts/test-storage.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.84.1",
     "@payloadcms/db-sqlite": "^3.84.1",
     "@payloadcms/next": "^3.84.1",
     "@payloadcms/richtext-lexical": "^3.84.1",
+    "@payloadcms/storage-s3": "^3.84.1",
     "@payloadcms/ui": "^3.84.1",
     "graphql": "^16.14.0",
     "next": "16.2.6",

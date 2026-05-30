@@ -173,6 +173,9 @@ SELECT * FROM users;  -- query (note: passwords are salted + hashed)
 
 In production, `DATABASE_URI` is the Supabase connection string. Open a console with `psql`:
 
+### pnpm migrate:prod 
+## === ( set -a; source .env.production; set +a; pnpm payload migrate )
+
 ```bash
 psql "$DATABASE_URI"          # if the env var is set in your shell
 # or pass the URL directly:

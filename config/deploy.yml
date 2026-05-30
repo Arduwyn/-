@@ -1,0 +1,79 @@
+# Kamal deploy config — Next.js + Payload app on a DigitalOcean Droplet.
+# Docs: https://kamal-deploy.org
+#
+# Commands:
+#   kamal setup       # first time — installs Docker on the Droplet + deploys
+#   kamal deploy      # subsequent deploys (zero-downtime)
+#   kamal app logs    # tail the app logs
+#   kamal app exec -i bash   # interactive shell into the running container
+#   kamal app boot    # restart the container
+#   kamal proxy reboot       # restart the kamal-proxy (TLS frontend)
+
+service: arduwyn
+
+# Image to build/push. Hostname determines the registry:
+#   ghcr.io/<owner>/<repo>   → GitHub Container Registry
+# Pushed under natgitinit's personal namespace — each deployer authenticates
+# with their own PAT. Image can be transferred to the Arduwyn org later via
+# GitHub UI (Package settings → Transfer ownership).
+image: ghcr.io/natgitinit/arduwyn
+
+# The Droplet(s) running the app container.
+servers:
+  web:
+    - 162.243.224.84
+
+# Reverse proxy + TLS handled by kamal-proxy (auto-installed).
+# Initially no domain — visit the site at http://162.243.224.84.
+# When the domain is ready, set `host:` to the domain and `ssl: true` →
+# kamal-proxy provisions a Let's Encrypt cert on next `kamal deploy`.
+proxy:
+  ssl: false
+  app_port: 3000
+  healthcheck:
+    path: /
+    interval: 5
+    timeout: 30
+
+# Image registry credentials. Username is the GitHub org/user, password
+# is a Personal Access Token with `write:packages` scope (loaded from
+# .kamal/secrets so it never lands in git).
+registry:
+  server: ghcr.io
+  username: natgitinit
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+# Environment variables passed into the running container.
+# - clear: visible in `kamal env`
+# - secret: read from .kamal/secrets, redacted in command output
+env:
+  clear:
+    NODE_ENV: production
+    NEXT_TELEMETRY_DISABLED: "1"
+    PORT: "3000"
+    HOSTNAME: "0.0.0.0"
+  secret:
+    - DATABASE_URI
+    - PAYLOAD_SECRET
+    - S3_ENDPOINT
+    - S3_REGION
+    - S3_BUCKET
+    - S3_ACCESS_KEY_ID
+    - S3_SECRET_ACCESS_KEY
+
+# SSH key Kamal uses to log into the Droplet.
+ssh:
+  user: root
+  keys:
+    - ~/.ssh/id_arduwyn
+
+# Local Docker build settings.
+builder:
+  arch: amd64   # Droplet is x86_64; build for that even when developing on Apple Silicon
+
+# Optional: aliases so we can run `kamal <alias>` shortcuts.
+aliases:
+  shell: app exec -i bash
+  logs: app logs -f
+  migrate: app exec --reuse "pnpm payload migrate"
