@@ -1,0 +1,25 @@
+/* Also used by the PlatformTags block's optional note. */
+.placeholder {
+  border: 1px dashed rgba(151, 199, 253, 0.34);
+  background: rgba(151, 199, 253, 0.03);
+  border-radius: 14px;
+  padding: 22px 24px;
+  max-width: 720px;
+  margin: 24px auto 0;
+}
+.placeholder .ph-tag {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.placeholder p {
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.62;
+  font-weight: 300;
+  margin: 0;
+}

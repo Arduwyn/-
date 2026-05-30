@@ -1,0 +1,79 @@
+.failures-wrap {
+  background: #06070e;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 42px clamp(20px, 3vw, 40px);
+  box-shadow: 0 30px 66px -38px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+.failures-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+.failures-head h3 {
+  font-family: var(--font-instrument-serif), "Instrument Serif", serif;
+  font-weight: 400;
+  font-size: 34px;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.failures-head h3 .accent-i {
+  color: var(--accent);
+  font-style: italic;
+}
+.failures-head .count {
+  font-family: var(--font-instrument-serif), "Instrument Serif", serif;
+  font-style: italic;
+  color: var(--accent);
+  font-size: 60px;
+  line-height: 1;
+}
+.failures-intro {
+  color: var(--text-soft);
+  opacity: 0.8;
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 780px;
+  margin: 0 0 28px;
+  font-weight: 300;
+}
+.failures-grid {
+  display: grid;
+  gap: 10px 22px;
+}
+.failures-grid.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.failures-grid.cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.failures-grid .f {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.failures-grid .num {
+  font-family: var(--font-instrument-serif), "Instrument Serif", serif;
+  font-style: italic;
+  color: var(--accent);
+  font-size: 18px;
+  min-width: 26px;
+  flex: 0 0 auto;
+}
+.failures-grid .label {
+  color: #cdd6e3;
+  font-size: 13.5px;
+  line-height: 1.45;
+  font-weight: 300;
+}
+@media (max-width: 760px) {
+  .failures-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

@@ -1,0 +1,27 @@
+.page-hero {
+  padding: 80px 0 70px;
+  text-align: center;
+  background: var(--hero-bg);
+  border-bottom: 1px solid var(--line);
+}
+.page-hero h1 {
+  font-family: var(--font-instrument-serif), "Instrument Serif", serif;
+  font-weight: 400;
+  font-size: clamp(48px, 7vw, 96px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  margin: 16px auto 22px;
+  max-width: 18ch;
+}
+.page-hero h1 .accent-i {
+  color: var(--accent);
+  font-style: italic;
+}
+.page-hero p {
+  color: var(--text-soft);
+  opacity: 0.85;
+  font-size: 17px;
+  line-height: 1.65;
+  max-width: 700px;
+  margin: 0 auto;
+}

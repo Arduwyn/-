@@ -1,17 +1,27 @@
 import Link from 'next/link'
 
+import { accentText } from './accent'
 import type { CTABlockData } from './types'
 
-export function CTABlock({ heading, text, button }: CTABlockData) {
+export function CTABlock({ eyebrow, heading, body, buttons }: CTABlockData) {
   return (
-    <section className="container" style={{ paddingTop: 40, paddingBottom: 80 }}>
+    <section id="contact" className="container">
       <div className="cta-band">
-        <h2>{heading}</h2>
-        {text ? <p>{text}</p> : null}
-        {button?.label && button?.href ? (
-          <Link className="btn btn-primary" href={button.href}>
-            {button.label}
-          </Link>
+        {eyebrow ? <span className="eyebrow">{eyebrow}</span> : null}
+        <h2>{accentText(heading)}</h2>
+        {body ? <p>{body}</p> : null}
+        {buttons?.length ? (
+          <div className="btn-row">
+            {buttons.map((button, i) => (
+              <Link
+                key={button.id ?? i}
+                className={`btn btn-${button.style ?? 'primary'}`}
+                href={button.href}
+              >
+                {button.label}
+              </Link>
+            ))}
+          </div>
         ) : null}
       </div>
     </section>

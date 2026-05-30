@@ -22,6 +22,11 @@
   --maxw:      1240px;
   --pad:       clamp(20px, 4vw, 56px);
   --grain:     url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.04  0 0 0 0 0.05  0 0 0 0 0.08  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>");
+  /* Single source of truth for every page-hero background. Used by HomeHero,
+     PageHero (all CMS pages), and the architecture page so they all match. */
+  --hero-bg:
+    radial-gradient(820px 360px at 50% 0%, rgba(151,199,253,.16), transparent 72%),
+    linear-gradient(180deg, #080c17 0%, #05060d 58%, #02030a 100%);
 }
 
 @theme inline {
@@ -82,7 +87,7 @@ img,svg{display:block;max-width:100%}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
 .brand{display:flex;align-items:center;gap:12px}
 .brand-mark{width:38px;height:42px;flex:0 0 auto}
-.brand-text{display:flex;flex-direction:column;line-height:1}
+.brand-text{display:flex;flex-direction:column;line-height:1; padding-top: 8px;}
 .brand-name{font-weight:600;font-size:20px;letter-spacing:.04em;color:var(--text)}
 .brand-sub{font-size:9.5px;letter-spacing:.22em;color:var(--sub);text-transform:uppercase;margin-top:4px}
 .nav-links{display:flex;align-items:center;gap:28px}
@@ -97,6 +102,7 @@ img,svg{display:block;max-width:100%}
   border:1px solid transparent;cursor:pointer;
   transition:transform .15s ease, background .2s, color .2s, box-shadow .2s;
   text-decoration:none;
+  white-space:nowrap;
 }
 .btn-primary{
   background:var(--accent);
@@ -111,6 +117,10 @@ img,svg{display:block;max-width:100%}
   box-shadow:0 0 0 1px rgba(255,255,255,.10), 0 6px 18px rgba(151,199,253,.18);
 }
 .nav .btn-primary:hover{color:#000;box-shadow:0 0 0 1px rgba(255,255,255,.22), 0 8px 24px rgba(151,199,253,.32)}
+/* Footer brand: explicitly stacked with breathing room between the shield
+   and the wordmark. Header keeps the global row layout. */
+footer .brand{flex-direction:column;align-items:flex-start;gap:22px}
+footer .brand-mark{width:42px;height:46px}
 .btn-ghost{background:transparent;color:var(--accent);border-color:rgba(151,199,253,.32)}
 .btn-ghost:hover{background:rgba(151,199,253,.08)}
 .nav-toggle{display:none;background:none;border:none;color:var(--text);cursor:pointer;padding:8px}
@@ -202,4 +212,18 @@ footer{
   .nav-toggle{display:inline-flex;align-items:center;justify-content:center}
   section{padding:60px 0}
   .foot-grid{grid-template-columns:1fr}
+}
+
+/* Restore vertical section spacing: `.container` (a class) otherwise overrides
+   `section { padding: 90px 0 }` and the sections collapse together. The home
+   hero has its own padding, so it's excluded. */
+section.container:not(.hero) {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+@media (max-width: 760px) {
+  section.container:not(.hero) {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
 }

@@ -1,0 +1,118 @@
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 30px;
+  margin-bottom: 34px;
+  align-items: start;
+}
+.about-story p {
+  color: var(--text-soft);
+  font-size: 15.5px;
+  line-height: 1.72;
+  font-weight: 300;
+  margin: 0 0 16px;
+}
+.about-story p:last-child {
+  margin-bottom: 0;
+}
+.about-story .accent-i {
+  color: var(--accent);
+  font-style: italic;
+  font-family: var(--font-instrument-serif), "Instrument Serif", serif;
+}
+.about-panel {
+  background: #06070e;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 28px 26px;
+  box-shadow: 0 26px 56px -34px rgba(0, 0, 0, 0.92), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.about-panel h4 {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sub);
+  font-weight: 500;
+  margin: 0 0 6px;
+}
+.about-panel h4.spaced {
+  margin-top: 24px;
+}
+.cred-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.cred-tags span {
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--accent-soft);
+  background: rgba(151, 199, 253, 0.07);
+  border: 1px solid rgba(151, 199, 253, 0.2);
+  border-radius: 999px;
+  padding: 5px 11px;
+}
+.about-panel .focus {
+  color: #cdd6e3;
+  font-size: 13.5px;
+  line-height: 1.65;
+  font-weight: 300;
+  margin: 0 0 22px;
+}
+.about-panel .btn {
+  width: 100%;
+  justify-content: center;
+}
+.diff-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+.diff {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 24px 22px;
+  box-shadow: 0 16px 32px -20px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.055);
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.diff:hover {
+  transform: translateY(-3px);
+  border-color: rgba(151, 199, 253, 0.22);
+  box-shadow: 0 26px 50px -20px rgba(0, 0, 0, 0.95), 0 0 28px -10px rgba(151, 199, 253, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.diff .di {
+  width: 30px;
+  height: 30px;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+.diff h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 8px;
+  letter-spacing: -0.005em;
+  line-height: 1.32;
+}
+.diff p {
+  color: #cdd6e3;
+  font-size: 13px;
+  line-height: 1.58;
+  font-weight: 300;
+  margin: 0;
+}
+@media (max-width: 980px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+  .diff-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .diff-grid {
+    grid-template-columns: 1fr;
+  }
+}
