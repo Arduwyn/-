@@ -214,6 +214,12 @@ footer{
   .foot-grid{grid-template-columns:1fr}
 }
 
+/* Leave room for the sticky header when an in-page anchor scrolls a section
+   to the top — otherwise the heading lands behind it and the jump looks broken. */
+section[id], [id="contact"], [id="about"], [id="services"], [id="portfolio"] {
+  scroll-margin-top: 90px;
+}
+
 /* ---------- scroll reveal (subtle fade + rise on viewport entry) ----------
    .reveal alone does NOT hide content — content stays visible without JS.
    ScrollReveal adds `.is-prepped` to below-fold elements (then hides them) and
