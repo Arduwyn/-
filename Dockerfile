@@ -45,6 +45,18 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV DATABASE_URI=postgres://build:build@localhost:5432/build
 ENV PAYLOAD_SECRET=build-time-placeholder
+# These S3_* placeholders aren't real credentials — they just need to be
+# truthy so the s3Storage plugin's `if (S3_BUCKET && ...)` gate in
+# payload.config.ts passes at build time. That lets `generate:importmap`
+# discover the plugin's client component (S3ClientUploadHandler) and add
+# it to the import map. Without this, the admin renders a blank page at
+# runtime because Payload tries to look up the component and finds nothing.
+# Real values come from Kamal secrets at runtime.
+ENV S3_BUCKET=build-placeholder
+ENV S3_ACCESS_KEY_ID=build-placeholder
+ENV S3_SECRET_ACCESS_KEY=build-placeholder
+ENV S3_ENDPOINT=https://build-placeholder.invalid
+ENV S3_REGION=us-east-1
 
 RUN pnpm payload generate:importmap
 RUN pnpm build

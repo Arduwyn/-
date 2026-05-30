@@ -23,7 +23,7 @@ Visitor ──HTTPS──▶ kamal-proxy ──▶ Next.js + Payload container (
 | 2 | Swap Media storage from disk → Supabase Storage | ✅ done — smoke test passed end-to-end |
 | 3 | Dockerfile (multi-stage, standalone output) | ✅ written, awaiting first build |
 | 4 | Kamal config (`config/deploy.yml` + secrets) | ✅ written, awaiting `kamal setup` |
-| 5 | DigitalOcean Droplet provisioned, first `kamal deploy` | 🟡 Droplet up (162.243.224.84), Kamal not yet run |
+| 5 | DigitalOcean Droplet provisioned, first `kamal deploy` | ✅ done — site live at http://162.243.224.84 |
 | 6 | Domain + TLS (Let's Encrypt via kamal-proxy) | ⏳ pending |
 
 ## Decisions
@@ -82,6 +82,42 @@ Visitor ──HTTPS──▶ kamal-proxy ──▶ Next.js + Payload container (
   uploads a 1×1 PNG, verifies Postgres row + public URL fetch
   (200 + image/png), cleans up. All checks passed.
 
+### 2026-05-30 — Phase 5: first production deploy
+
+- **`kamal setup` attempt 1**: failed at build with
+  `failed to read dockerfile: open Dockerfile: no such file or directory` —
+  Kamal 2.x packages the build context from `git archive HEAD`, so the
+  Dockerfile, `.dockerignore`, `migrations/`, and `config/deploy.yml`
+  needed to be **committed** (not just present locally). Committed the
+  full deploy infra in one local commit on `feat/deploy`. Retried — builder
+  picked up everything.
+- **`kamal setup` attempt 2**: image built (~3 min), pushed to GHCR, pulled
+  on Droplet, container started — but **healthcheck timed out at 30s** and
+  Kamal killed the container with SIGTERM (exit 143).
+- **Root cause**: `.kamal/secrets` had `../.env.production` (relative paths
+  with `../`). Kamal evaluates secrets-file shell substitutions from the
+  **repo root**, not from inside `.kamal/`, so every `$(grep ... ../.env.production)`
+  silently expanded to empty. `KAMAL_REGISTRY_PASSWORD` used `~/.ghcr-token`
+  (absolute path) so the registry login worked, masking the issue during
+  build/push — but `PAYLOAD_SECRET`, `DATABASE_URI`, and the `S3_*` vars
+  arrived in the container as empty strings. Payload's `init` threw
+  `missing secret key. A secret key is needed to secure Payload.` on every
+  request → healthcheck failed.
+- **Fix**: stripped `../` from the seven grep+cut lines in `.kamal/secrets`
+  (the gitignored file — no commit needed). Verified all seven keys resolve.
+- **`kamal deploy`**: 🎉 succeeded. Site live at http://162.243.224.84,
+  `/admin` reachable.
+
+### Known cosmetic issues to clean up in a follow-up deploy
+
+- `config/deploy.yml` has `image: ghcr.io/natgitinit/arduwyn`. In Kamal 2.x
+  the `image:` field should NOT include the registry hostname (it's prepended
+  from `registry.server`). The pushed image ends up at
+  `ghcr.io/ghcr.io/natgitinit/arduwyn` — GHCR is lenient so it works, but
+  it's wrong. Fix in a quiet maintenance deploy: change to
+  `image: natgitinit/arduwyn`, then `kamal deploy` (a re-tag, not a full
+  rebuild).
+
 ### 2026-05-30 — Phases 3 + 4: Dockerfile + Kamal config
 
 - **`Dockerfile`** — multi-stage: deps → builder → runner. Final image is
@@ -106,16 +142,17 @@ Visitor ──HTTPS──▶ kamal-proxy ──▶ Next.js + Payload container (
 
 - [x] ~~Apply initial migration to Supabase~~ ✅ done
 - [x] ~~Wire Supabase Storage adapter for Media~~ ✅ done
-- [ ] Install Kamal CLI (`brew tap basecamp/kamal && brew install kamal`)
-- [ ] Create GitHub Container Registry PAT, save to `~/.ghcr-token`
-- [ ] Smoke-test the Dockerfile locally (`docker build` + `docker run`)
-- [ ] `kamal setup` — first deploy
-- [ ] Verify tables in Supabase dashboard (eyeball check, optional)
+- [x] ~~Install Kamal CLI~~ ✅ (gem install via RVM, `kamal 2.6.1`)
+- [x] ~~Create GitHub Container Registry PAT, save to `~/.ghcr-token`~~ ✅
+- [x] ~~`kamal setup` / `kamal deploy` — first deploy~~ ✅ live at http://162.243.224.84
+- [ ] Create first admin user at http://162.243.224.84/admin
+- [ ] Seed production content (`pnpm seed:prod`) — when ready to launch
 - [ ] Enable RLS on Payload tables for defense-in-depth (SQL snippet in
       `docs/supabase.md`) — recommended before going live
-- [ ] Seed production content (`pnpm seed:prod`) — when ready to launch
-- [ ] Create first admin user in production (`/admin` once deployed, or
-      via Local API)
+- [ ] Phase 6: point domain at the Droplet, flip `proxy.ssl: true` in
+      `config/deploy.yml`, set `proxy.host: <domain>`, `kamal deploy`
+- [ ] Fix the `image: ghcr.io/...` typo in `config/deploy.yml` (see
+      "Known cosmetic issues" above)
 
 ## Out of scope (for now)
 
