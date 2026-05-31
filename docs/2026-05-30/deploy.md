@@ -24,7 +24,7 @@ Visitor ──HTTPS──▶ kamal-proxy ──▶ Next.js + Payload container (
 | 3 | Dockerfile (multi-stage, standalone output) | ✅ written, awaiting first build |
 | 4 | Kamal config (`config/deploy.yml` + secrets) | ✅ written, awaiting `kamal setup` |
 | 5 | DigitalOcean Droplet provisioned, first `kamal deploy` | ✅ done — site live at http://162.243.224.84 |
-| 6 | Domain + TLS (Let's Encrypt via kamal-proxy) | ⏳ pending |
+| 6 | Domain + TLS (Let's Encrypt via kamal-proxy) | ✅ done — live at https://arduwyn.com |
 
 ## Decisions
 
@@ -174,10 +174,37 @@ Visitor ──HTTPS──▶ kamal-proxy ──▶ Next.js + Payload container (
 - [x] ~~Seed production content (`pnpm seed:prod`)~~ ✅ done — homepage live
 - [ ] Enable RLS on Payload tables for defense-in-depth (SQL snippet in
       `docs/supabase.md`) — recommended before going live
-- [ ] Phase 6: point domain at the Droplet + enable HTTPS (see runbook
-      below).
+- [x] ~~Phase 6: point domain at the Droplet + enable HTTPS~~ ✅ live at
+      https://arduwyn.com
 - [ ] Fix the `image: ghcr.io/...` typo in `config/deploy.yml` (see
       "Known cosmetic issues" above)
+
+### 2026-05-30 — Phase 6: domain + HTTPS
+
+- Client added A record `arduwyn.com → 162.243.224.84` at his registrar.
+- Verified DNS propagation locally: `dig arduwyn.com +short` returned the
+  IP within ~5 minutes.
+- Edited `config/deploy.yml`: `proxy.ssl: true` + `proxy.host: arduwyn.com`.
+- `kamal deploy` — kamal-proxy performed the HTTP-01 ACME challenge,
+  Let's Encrypt issued the cert (~30 seconds), kamal-proxy installed it
+  on :443 and set up the HTTP → HTTPS redirect.
+- **Live at https://arduwyn.com** (Let's Encrypt production cert from
+  YE1 intermediate, valid 90 days, auto-renews via kamal-proxy).
+- **Cert renewal** is automatic: kamal-proxy renews 30 days before
+  expiry in-process with zero downtime. Nothing to maintain.
+
+### Known follow-ups (separate sessions when ready)
+
+- **Cloudflare** — layer in front for CDN/DDoS/analytics. Client to
+  share Cloudflare account access; will set SSL mode to "Full (strict)"
+  since origin already has Let's Encrypt.
+- **www subdomain** — currently doesn't resolve. If we want
+  `www.arduwyn.com` to work, client adds a CNAME `www → arduwyn.com`,
+  we add `www.arduwyn.com` to a `proxy.hosts` list, redeploy.
+- **Fix the `image: ghcr.io/ghcr.io/...` typo** in `config/deploy.yml`
+  (cosmetic — see earlier note in this doc).
+- **Enable RLS on Payload tables** — defense-in-depth, SQL snippet in
+  `docs/supabase.md`.
 
 ## Phase 6 runbook — domain + HTTPS
 
