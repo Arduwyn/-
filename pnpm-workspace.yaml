@@ -3,3 +3,16 @@ allowBuilds:
   esbuild: true
   sharp: true
   unrs-resolver: true
+
+# Force-upgrade vulnerable transitive dependencies to patched versions.
+# Scoped to the vulnerable ranges so already-patched copies are left alone.
+# Audit advisories addressed:
+#   esbuild   GHSA-67mh-4wv8-2f99  (dev-server SSRF, <=0.24.2)
+#   dompurify GHSA-h7mw-gpvr-xq4m + others (mXSS / proto-pollution, <3.4.0)
+#   postcss   GHSA-qx2v-qp2m-jg93  (XSS via unescaped </style>, <8.5.10)
+#   uuid      GHSA-w5hq-g745-h8pq  (missing buffer bounds check, <11.1.1)
+overrides:
+  esbuild@<0.24.3: '>=0.25.0'
+  dompurify@<3.4.0: '>=3.4.0'
+  postcss@<8.5.10: '>=8.5.10'
+  uuid@<11.1.1: '>=11.1.1'
