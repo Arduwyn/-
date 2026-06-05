@@ -52,7 +52,6 @@ export function Footer() {
           <span className="status">
             <span className="dot"></span> Currently accepting new engagements
           </span>
-          <a href="/admin" className="foot-admin">Admin</a>
         </div>
       </div>
     </footer>
