@@ -4,6 +4,19 @@ Newest entries at the top. Dates are absolute.
 
 ---
 
+## 2026-10-23 — Security dependency update (Payload 3.92, Next 16.4.2)
+
+`pnpm audit` had drifted to 127 advisories (10 critical) since June. Upgraded Payload
+3.84.1 → 3.92.0 (all `@payloadcms/*`), Next 16.2.6 → 16.4.2, sharp 0.35, vite 8.3.5,
+plus dev tooling. Audit now clean. Payload 3.92 adds one nullable column on `users`
+→ new migration `20261023_182038` (run `pnpm migrate:prod` before `kamal deploy`).
+Build + typecheck green; int-test suites hit the 10 s `beforeAll` limit (harness issue,
+Payload itself boots in 0.5 s). Also did a read-only droplet audit — reboot pending,
+ufw off, headers — see **[2026-10-23/security-updates.md](./2026-10-23/security-updates.md)**
+for the full table and deploy runbook.
+
+---
+
 ## 2026-05-25 — Blocks-based page builder (Pages collection + rendering)
 
 Built the foundation for "manage pages from the CMS, no code per page" — test-first.
